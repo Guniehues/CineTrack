@@ -7,38 +7,96 @@
 </head>
 <body>
 
-    <h1><strong>CineTrack</strong></h1>
-    <h5><strong>CineTrack</strong> é o seu gerenciador pessoal de filmes: registre o que já viu,
-         o que está vendo e o que quer ver.</h5>
+    <header>
+        <h1><strong>CineTrack</strong></h1>
+    </header>
     
-    <h3><strong>Status Possíveis</strong></h3>
+    <input type="text" label="Buscar filme"><button type="button">+</button>
+    <nav aria-label="Filtros de Status">
+        <button type="button" class="ativo">Todos</button>
+        <button type="button">Assistido</button>
+        <button type="button">Assistindo</button>
+        <button type="button">Quero Assistir</button>
+    </nav>
+
+    <main>
+        <section id="lista" aria-live="polite">
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/8/84/AOrigemPoster.jpg" alt="Poster A Origem" width="200" height="300">
+
+                <br>
+                <h2><strong>A Origem</strong></h2>
+                <p>2010 - Ficção Científica</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/b/be/Parasite_poster.jpg" alt="Poster Parasita" width="200" height="300">
+
+                <br>
+                <h2><strong>Parasita</strong></h2>
+                <p>2019 - Suspense</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/b/bf/O_auto_da_compadecida.jpg" alt="Poster O Auto da Compadecida" width="200" height="300">
+
+                <br>
+                <h2><strong>O Auto da Compadecida</strong></h2>
+                <p>2000 - Comédia</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/5/52/Dune_Part_Two_poster.jpeg" alt="Poster Duna: Parte Dois" width="200" height="300">
+
+                <br>
+                <h2><strong>Duna: Parte Dois</strong></h2>
+                <p>2024 - Ficção Científica</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png" alt="Poster Interestelar" width="200" height="300">
+
+                <br>
+                <h2><strong>Interestelar</strong></h2>
+                <p>2014 - Ficção Científica</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            <article class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg" alt="Poster Cidade de Deus" width="200" height="300">
+
+                <br>
+                <h2><strong>Cidade de Deus</strong></h2>
+                <p>2002 - Drama</p>
+                <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                <span class="badge">assistido</span> <button type="button">Editar</button><button type="button">Remover</button>
+            
+            </article>
+
+            
+        </section>
+    </main>
     
-    <ul>
-        <li>Assitido</li>
-        <li>Assistindo</li>
-        <li>Quero Assistir</li>
-    </ul>
-
-    <h3><strong>Meus Filmes Favoritos</strong></h3>
-
-    <ol>
-        <li>A origem</li>
-        <li>Interstelar</li>
-        <li>Parasita</li>
-    </ol>
-
-    <h3><strong>Sobre A Origem</strong></h3>
-
-    <dt>Diretor</dt> <dd>Chritopher Nolan</dd>
-    <dt>Ano</dt> <dd>2010</dd>
-    <dt>Gênero</dt> <dd>Ficção Científica</dd>
 
 
-
-
-
-    <br><br>
-    <a href="formulario.html">Adicionar filme</a>
-    <h6>&copy; 2025 CineTrack</h6>
+    <footer>
+        <br><br>
+        <a href="formulario.html">Adicionar filme</a>
+        <h6>&copy; 2025 CineTrack</h6>
+    </footer>
 </body>
 </html>
