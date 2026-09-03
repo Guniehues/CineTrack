@@ -8,16 +8,27 @@
  img { max-width: 100%; display: block; }
  button { font: inherit; cursor: pointer; }
 
+
+
 header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
     background-color: #041e64;
     color: white;
     padding: 1rem;
     
+
     input{
+        display: block;
+        width: 80%;
         padding: 0.5rem;
         border: none;
         border-radius: 5px;
         margin-right: 1rem;
+        
     }
 
     button{
@@ -38,8 +49,28 @@ header{
 }
 
 nav {
+    display: flex;
+    gap: 1rem;
     background-color: #ccc;
     padding: 1rem;
+
+    button{
+        background-color: #ffffff;
+        color: rgb(44, 12, 187);
+        border: 1px solid rgb(44, 12, 187);
+        padding: 0.5rem 1rem;
+        margin-left: 1rem;
+        border-radius: 999px;
+    }
+
+    button.ativo {
+        background-color: rgb(44, 12, 187);
+        color: white;
+        border: 1px solid rgb(44, 12, 187);
+        padding: 0.5rem 1rem;
+        margin-left: 1rem;
+        border-radius: 999px;
+    }
 }
 
 button{
@@ -56,4 +87,41 @@ body{
     font-size: 16px;
     line-height: 2;
     color: black;
+}
+
+main{
+ 
+#lista{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 24px;
+
+
+    .card{width: 200px;}
+
+    .card {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+        .card.acoes{
+            font-style: bold;
+            margin-top: auto;
+            gap: 8px;
+        }
+
+        .badge{
+        width: 80px;
+        background-color: #838383;
+        color: rgb(0, 0, 0);
+        border: 2px solid rgb(0, 0, 0);
+        padding: 0.2rem 0.2rem;
+        border-radius: 999px;
+        }
+    }   
+
+    
 }
