@@ -19,9 +19,17 @@ header{
     background-color: #041e64;
     color: white;
     padding: 1rem;
+}
     
+header h1{
+        font-size: clamp(1.2rem,
+        1rem + 2.5vw,
+        2.5rem);
 
-    input{
+        gap: clamp(0.5rem, 0.5rem + 1vw, 1rem);
+    }
+
+    header input{
         display: block;
         width: 80%;
         padding: 0.5rem;
@@ -31,20 +39,29 @@ header{
         
     }
 
-    button{
+@media(min-width: 1024px){
+    #hidetext {
+        display: inline;
+    }
+}
+
+#hidetext {
+    display: none;
+}
+
+header button{
         background-color: #f10404;
         color: white;
         border: 1px solid white;
         padding: 0.5rem 1rem;
         margin-left: 1rem;
     }
-}
 
 .card {
- padding: 16px; /* espaço interno */
- border: 1px solid #ddd; /* borda */
- border-radius: 8px; /* cantos */
- box-shadow: 0 1px 4px #0002; /* sombra */
+ padding: 16px; 
+ border: 1px solid #ddd; 
+ border-radius: 8px; 
+ box-shadow: 0 1px 4px #0002; 
  font-size: 18px;
 }
 
@@ -89,31 +106,37 @@ body{
     color: black;
 }
 
-main{
+
  
 #lista{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
     padding: 16px 24px;
 
-
-    .card{width: 200px;}
-
-    .card {
+}
+    #lista .card {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
         gap: 6px;
     }
 
-        .card.acoes{
+    #lista .card.poster{
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+        }
+
+        #lista .card.acoes{
+            display: flex;
+            flex-wrap: inline;
             font-style: bold;
             margin-top: auto;
             gap: 8px;
         }
 
-        .badge{
+        #lista .badge{
         width: 80px;
         background-color: #838383;
         color: rgb(0, 0, 0);
@@ -121,7 +144,7 @@ main{
         padding: 0.2rem 0.2rem;
         border-radius: 999px;
         }
-    }   
-
     
-}
+    #lista h2{
+        font-size: clamp(1rem, 1rem + 2vw, 1.5rem);
+    }
