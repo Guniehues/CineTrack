@@ -30,7 +30,7 @@
                 <h2><strong>A Origem</strong></h2>
                 <p>2010 - Ficção Científica</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -41,7 +41,7 @@
                 <h2><strong>Parasita</strong></h2>
                 <p>2019 - Suspense</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -52,7 +52,7 @@
                 <h2><strong>O Auto da Compadecida</strong></h2>
                 <p>2000 - Comédia</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -63,7 +63,7 @@
                 <h2><strong>Duna: Parte Dois</strong></h2>
                 <p>2024 - Ficção Científica</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -74,7 +74,7 @@
                 <h2><strong>Interestelar</strong></h2>
                 <p>2014 - Ficção Científica</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -85,7 +85,7 @@
                 <h2><strong>Cidade de Deus</strong></h2>
                 <p>2002 - Drama</p>
                 <p>Nota: &#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                <span class="badge">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge assistido">assistido</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
             
             </article>
 
@@ -100,5 +100,29 @@
         <a href="formulario.html">Adicionar filme</a>
         <h6>&copy; 2025 CineTrack</h6>
     </footer>
+
+    <div id="modal" hidden>
+        <div class="modal-conteudo">
+            <h2>Adicionar filme</h2>
+            <form id="form-file">
+                <label>Título<br> <input type="text"><br> </label>
+
+                <label>Ano<br> <input type="number" min="1800" max="2100"><br> </label>
+
+                <label>Gênero<br> <input type="text"><br> </label>
+
+                <label>URL do pôster<br> <input type="text"><br> </label>
+                
+                <label>Status<br> <input type=""><br> </label>
+
+                <label>Nota<br> <input type="number" range min="0" max="5"><br> </label>
+
+                <label>Comentário<br> <input type="text"><br> </label>
+
+                <br><br>
+                <button type="button">Cancelar</button> <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

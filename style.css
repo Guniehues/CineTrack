@@ -1,14 +1,56 @@
+:root {
+    --cor-primaria: #041e64;
+    --cor-acento: #f10404;
+    --cor-fundo: #ffffff;
+    --cor-texto: #000000;
+    --cor-cartao: #ffffff;
+    --cor-borda: #dddddd;
+    --cor-botao-fundo: #f0f0f0;
+    --cor-foco: #4A9eE2;
+    --cor-assistido: #2E7D32;
+    --cor-assistindo: #C9A227;
+    --cor-quero: #1A3A5C;
+    --raio: 8px;
+    --espaco: 16px;
+}
+
+
 * { box-sizing: border-box;
  margin: 0; padding: 0; }
 
  html { font-size: 16px; }
- body { font-family: system-ui, sans-serif;
- line-height: 1.5; }
+
+body{
+    background-color: var(--cor-fundo);
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    color: var(--cor-texto);
+}
 
  img { max-width: 100%; display: block; }
- button { font: inherit; cursor: pointer; }
 
+button {
+    font: inherit;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-botao-fundo);
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(5, 5, 5, 0.133);
+    transition: background 200ms ease, transform 150ms;
+}
 
+button:hover {
+    background: var(--cor-primaria);
+    color: white;
+    transform: translateY(-2px);
+}
+
+button:focus-visible {
+    outline: 3px solid var(--cor-foco);
+    outline-offset: 2px;
+}
 
 header{
     display: flex;
@@ -16,10 +58,9 @@ header{
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    background-color: #041e64;
+    background-color: var(--cor-primaria);
     color: white;
     padding: 1rem;
-    
 
     input{
         display: block;
@@ -28,11 +69,10 @@ header{
         border: none;
         border-radius: 5px;
         margin-right: 1rem;
-        
     }
 
     button{
-        background-color: #f10404;
+        background-color: var(--cor-acento);
         color: white;
         border: 1px solid white;
         padding: 0.5rem 1rem;
@@ -41,11 +81,12 @@ header{
 }
 
 .card {
- padding: 16px; /* espaço interno */
- border: 1px solid #ddd; /* borda */
- border-radius: 8px; /* cantos */
- box-shadow: 0 1px 4px #0002; /* sombra */
- font-size: 18px;
+    background-color: var(--cor-cartao);
+    padding: var(--espaco);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    box-shadow: 0 1px 4px #0002;
+    font-size: 18px;
 }
 
 nav {
@@ -73,30 +114,13 @@ nav {
     }
 }
 
-button{
-        padding: 0.5rem 1rem;
-        border: 1px solid #ccc;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        box-shadow: 0 1px 4px rgba(5, 5, 5, 0.133);
-    }
-
-body{
-    background-color: #ffffff;
-    font-family: system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 2;
-    color: black;
-}
-
 main{
- 
+
 #lista{
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     padding: 16px 24px;
-
 
     .card{width: 200px;}
 
@@ -107,21 +131,104 @@ main{
         gap: 6px;
     }
 
-        .card.acoes{
-            font-style: bold;
-            margin-top: auto;
-            gap: 8px;
-        }
+    .card .acoes{
+        margin-top: auto;
+        gap: 8px;
+    }
 
-        .badge{
+    .badge{
         width: 80px;
         background-color: #838383;
         color: rgb(0, 0, 0);
         border: 2px solid rgb(0, 0, 0);
         padding: 0.2rem 0.2rem;
         border-radius: 999px;
-        }
-    }   
+        text-align: center;
+    }
 
-    
+    .badge.assistido{
+        background-color: var(--cor-assistido);
+        color: white;
+        border-color: var(--cor-assistido);
+    }
+
+    .badge.assistindo{
+        background-color: var(--cor-assistindo);
+        color: white;
+        border-color: var(--cor-assistindo);
+    }
+
+    .badge.quero{
+        background-color: var(--cor-quero);
+        color: white;
+        border-color: var(--cor-quero);
+    }
+    }
+}
+
+#modal {
+    position: fixed;
+    inset: 0;
+    background: rgb(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+#modal[hidden] {
+    display: none;
+}
+
+.modal-conteudo {
+    background: var(--cor-cartao);
+    color: var(--cor-texto);
+    padding: 24px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow: auto;
+    animation: aparecer 200ms ease;
+}
+
+.modal-conteudo h2 {
+    margin-bottom: 16px;
+}
+
+.modal-conteudo form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.modal-conteudo form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    font: inherit;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cor-fundo: #1a1a1a;
+        --cor-texto: #f3f3f3;
+        --cor-cartao: #2a2a2a;
+        --cor-borda: #444444;
+        --cor-botao-fundo: #333333;
+    }
 }
