@@ -29,6 +29,8 @@ const filmesIniciais = [
     {id: gera_id(), titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg", nota: 4, status: "Assistido"}
 ]
 
+let filmes = [...filmesIniciais];
+
 function renderizarCards(filmes) {
     const cards = filmes.map((f) => `<article class="card" data-id="${f.id}">
                 <img src="${f.poster}" alt="Poster ${f.titulo}" width="200" height="300">
@@ -37,7 +39,7 @@ function renderizarCards(filmes) {
                 <h2><strong>${f.titulo}</strong></h2>
                 <p>${f.ano} - ${f.genero}</p>
                 <p>Nota: ${estrelas(f.nota)}</p>
-                <span class="badge ${rotuloStatus(f.status)}">${f.status}</span> <div class = "acoes"><button type="button">Editar</button><button type="button">Remover</button></div>
+                <span class="badge ${rotuloStatus(f.status)}">${f.status}</span> <div class = "acoes"><button type="button" class = "btn-editar">Editar</button><button type="button" class = "btn-remover">Remover</button></div>
 
             </article>`).join("");
 
@@ -45,4 +47,29 @@ function renderizarCards(filmes) {
 }
 
 
-renderizarCards(filmesIniciais);
+renderizarCards(filmes);
+
+
+lista.addEventListener("click", (e) => {
+    const botao = e.target.closest(".btn-remover");
+    if (!botao) return;
+    if (!confirm("Remover este filme?")) return;
+
+    const card = botao.closest(".card");
+    const id = Number(card.dataset.id);
+    filmes = filmes.filter((f) => f.id !== id);
+    renderizarCards(filmes);
+});
+
+
+const nav = document.querySelector("nav");
+
+nav.addEventListener("click", (e) => {
+    const botao = e.target.closest("button");
+    if (!botao) return;
+    nav.querySelector(".ativo").classList.remove("ativo");
+
+    botao.classList.add("ativo");
+    const status = botao.dataset.status;
+    renderizarCards(filmes.filter((f) => status === "todos" || rotuloStatus(f.status) === status));
+});
