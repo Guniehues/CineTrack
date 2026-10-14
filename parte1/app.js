@@ -1,20 +1,16 @@
-var id = 0
-
 function rotuloStatus(status) {
-    if (status === "Assistido") {
-        return "assistido";
+    if (status === "assistido") {
+        return "Assistido";
     }
-    if (status === "Assistindo") {
-        return "assistindo";
+    if (status === "assistindo") {
+        return "Assistindo";
     }
-    if (status === "Quero Assistir") {
-        return "quero";
+    if (status === "quero") {
+        return "Quero assistir";
     }
 
     return status;
 }
-
-const gera_id = () => {return ++id}
 
 const gerarId = (lista) => Math.max(0, ...lista.map((f) => f.id)) + 1;
 
@@ -22,13 +18,15 @@ const estrelas = (nota) => {let nota_final = ''; for (let i = 1; i <= 5; i++) {n
 
 const Filme = {id: Number, titulo: String, ano: Number, genero: String, poster: String, nota: Number, status: String}
 
+const posterPadrao = "https://placehold.co/200x300?text=Sem+poster";
+
 const filmesIniciais = [
-    {id: gera_id(), titulo: "A Origem", ano: 2010, genero: "Ficção Científica", poster: "https://upload.wikimedia.org/wikipedia/pt/8/84/AOrigemPoster.jpg", nota: 5, status: "Assistido"},
-    {id: gera_id(), titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://upload.wikimedia.org/wikipedia/pt/b/be/Parasite_poster.jpg", nota: 4, status: "Assistido"},
-    {id: gera_id(), titulo: "O Auto da Compadecida", ano: 2000, genero: "Comédia", poster: "https://upload.wikimedia.org/wikipedia/pt/b/bf/O_auto_da_compadecida.jpg", nota: 5, status: "Assistido"},
-    {id: gera_id(), titulo: "Duna: Parte Dois", ano: 2024, genero: "Ficção Científica", poster: "https://upload.wikimedia.org/wikipedia/pt/5/52/Dune_Part_Two_poster.jpeg", nota: 4, status: "Assistido"},
-    {id: gera_id(), titulo: "Interestelar", ano: 2014, genero: "Ficção Científica", poster: "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png", nota: 5, status: "Assistido"},
-    {id: gera_id(), titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg", nota: 4, status: "Assistido"}
+    {id: 1, titulo: "A Origem", ano: 2010, genero: "Ficção científica", poster: "https://upload.wikimedia.org/wikipedia/pt/8/84/AOrigemPoster.jpg", nota: 5, status: "assistido", comentario: "Revejo sempre."},
+    {id: 2, titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://upload.wikimedia.org/wikipedia/pt/b/be/Parasite_poster.jpg", nota: 4, status: "assistido", comentario: ""},
+    {id: 3, titulo: "O Auto da Compadecida", ano: 2000, genero: "Comédia", poster: "https://upload.wikimedia.org/wikipedia/pt/b/bf/O_auto_da_compadecida.jpg", nota: 5, status: "assistido", comentario: "Classico nacional."},
+    {id: 4, titulo: "Duna: Parte Dois", ano: 2024, genero: "Ficção científica", poster: "https://upload.wikimedia.org/wikipedia/pt/5/52/Dune_Part_Two_poster.jpeg", nota: 4, status: "assistindo", comentario: ""},
+    {id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png", nota: 5, status: "quero", comentario: ""},
+    {id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg", nota: 4, status: "quero", comentario: ""}
 ]
 
 const CHAVE = "cinetrack:filmes";
@@ -48,7 +46,7 @@ function criarCard(f) {
     card.dataset.id = f.id;
 
     const poster = document.createElement("img");
-    poster.src = f.poster;
+    poster.src = f.poster || posterPadrao;
     poster.alt = `Poster ${f.titulo}`;
     poster.width = 200;
     poster.height = 300;
@@ -65,8 +63,8 @@ function criarCard(f) {
     nota.textContent = `Nota: ${estrelas(f.nota)}`;
 
     const badge = document.createElement("span");
-    badge.className = `badge ${rotuloStatus(f.status)}`;
-    badge.textContent = f.status;
+    badge.className = `badge ${f.status}`;
+    badge.textContent = rotuloStatus(f.status);
 
     const acoes = document.createElement("div");
     acoes.className = "acoes";
@@ -98,7 +96,7 @@ let statusAtual = "todos";
 
 function aplicarFiltros(lista, opcoes) {
     const termo = opcoes.termo.toLowerCase();
-    return lista.filter((f) => f.titulo.toLowerCase().includes(termo)).filter((f)=> opcoes.status === "todos" || opcoes.status === rotuloStatus(f.status));
+    return lista.filter((f) => f.titulo.toLowerCase().includes(termo)).filter((f)=> opcoes.status === "todos" || opcoes.status === f.status);
 }
 
 function atualizarContadores() {
@@ -162,12 +160,24 @@ nav.addEventListener("click", (e) => {
 let editandoId = null;
 const modal = document.querySelector("#modal");
 const form = document.querySelector("#form-filme");
+const tituloModal = document.querySelector("#titulo-modal");
+const errosForm = document.querySelector("#erros-form");
 const abrir = () => modal.hidden = false;
 const fechar = () => modal.hidden = true;
+
+function mostrarErros(erros) {
+    errosForm.replaceChildren(...erros.map((mensagem) => {
+        const item = document.createElement("p");
+        item.textContent = mensagem;
+        return item;
+    }));
+}
 
 document.querySelector("header button").addEventListener("click", () => {
     editandoId = null;
     form.reset();
+    tituloModal.textContent = "Adicionar filme";
+    mostrarErros([]);
     abrir();
 });
 
@@ -187,12 +197,10 @@ function validarFilme(filme) {
         erros.push("Ano inválido!");}
     if (!filme.genero){
         erros.push("Forneça um gênero!");}
-    if (!filme.status){
-        erros.push("Forneça um status!");}
-    if (filme.nota < 0 || filme.nota > 5){
+    if (!["assistido", "assistindo", "quero"].includes(filme.status)){
+        erros.push("Selecione um status!");}
+    if (filme.nota < 1 || filme.nota > 5){
         erros.push("Nota inválida!");}
-    if (!filme.poster){
-        erros.push("Poster Obrigatório!");}
 
     return { valido: erros.length === 0, erros};
 };
@@ -201,11 +209,13 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const dados = Object.fromEntries(new FormData(form));
+    dados.titulo = dados.titulo.trim();
+    dados.genero = dados.genero.trim();
     dados.ano = Number(dados.ano);
     dados.nota = Number(dados.nota);
 
     const { valido, erros } = validarFilme(dados);
-    if (!valido) { alert(erros.join("\n")); return;}
+    if (!valido) { mostrarErros(erros); return;}
 
     if (editandoId !== null) {
         filmes = filmes.map((f) =>
@@ -235,8 +245,7 @@ lista.addEventListener("click", (e) => {
     form.elements.status.value = f.status;
     form.elements.nota.value = f.nota;
     form.elements.comentario.value = f.comentario ?? "";
+    tituloModal.textContent = "Editar filme";
+    mostrarErros([]);
     abrir();
 });
-
-
-

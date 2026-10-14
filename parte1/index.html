@@ -1,58 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CineTrack</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <h1><strong>CineTrack</strong></h1>
-        <input type="text" placeholder="Buscar filme..."><button type="button">+ adicionar</button>
+        <input type="search" placeholder="Buscar filme..." aria-label="Buscar título"><button type="button">+ Adicionar</button>
     </header>
-    
+
 
     <nav aria-label="Filtros de Status">
         <button type="button" class="ativo" data-status = "todos">Todos <span class="contador"></span></button>
         <button type="button" data-status = "assistido">Assistido <span class="contador"></span></button>
         <button type="button" data-status = "assistindo">Assistindo <span class="contador"></span></button>
-        <button type="button" data-status = "quero">Quero Assistir <span class="contador"></span></button>
+        <button type="button" data-status = "quero">Quero assistir <span class="contador"></span></button>
     </nav>
 
     <main>
         <section id="lista" aria-live="polite">
-           
+
         </section>
     </main>
-    
+
 
 
     <footer>
-        <br><br>
-        <h6>&copy; 2025 CineTrack</h6>
+        <p>&copy; 2025 CineTrack</p>
     </footer>
 
     <div id="modal" hidden>
         <div class="modal-conteudo">
-            <h2>Adicionar filme</h2>
+            <h2 id="titulo-modal">Adicionar filme</h2>
             <form id="form-filme">
-                <label>Título<br> <input type="text" name="titulo"><br> </label>
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" required>
 
-                <label>Ano<br> <input type="number" name="ano" min="1800" max="2100"><br> </label>
+                <label for="ano">Ano</label>
+                <input type="number" id="ano" name="ano" min="1888" max="2030" step="1" required>
 
-                <label>Gênero<br> <input type="text" name="genero"><br> </label>
+                <label for="genero">Gênero</label>
+                <input type="text" id="genero" name="genero" required>
 
-                <label>URL do pôster<br> <input type="text" name="poster"><br> </label>
+                <label for="poster">URL do pôster</label>
+                <input type="url" id="poster" name="poster">
 
-                <label>Status<br> <input type="text" name="status"><br> </label>
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="quero">Quero assistir</option>
+                    <option value="assistindo">Assistindo</option>
+                    <option value="assistido">Assistido</option>
+                </select>
 
-                <label>Nota<br> <input type="number" name="nota" min="0" max="5"><br> </label>
+                <label for="nota">Nota (1 a 5)</label>
+                <input type="number" id="nota" name="nota" min="1" max="5" step="1" required>
 
-                <label>Comentário<br> <input type="text" name="comentario"><br> </label>
+                <label for="comentario">Comentário</label>
+                <textarea id="comentario" name="comentario"></textarea>
 
-                <br><br>
+                <div id="erros-form" class="erros" aria-live="polite"></div>
+
                 <button type="button">Cancelar</button> <button type="submit">Salvar</button>
             </form>
         </div>

@@ -1,16 +1,22 @@
 :root {
     --cor-primaria: #041e64;
-    --cor-acento: #f10404;
+    --cor-acento: #d00000;
     --cor-fundo: #ffffff;
     --cor-texto: #000000;
     --cor-cartao: #ffffff;
     --cor-borda: #dddddd;
     --cor-botao-fundo: #f0f0f0;
     --cor-foco: #4A9eE2;
+    --cor-filtro: #2c0cbb;
+    --cor-nav-fundo: #cccccc;
+    --cor-erro: #b00020;
     --cor-assistido: #2E7D32;
-    --cor-assistindo: #C9A227;
+    --cor-assistindo: #8A6D00;
     --cor-quero: #1A3A5C;
     --raio: 8px;
+    --raio-botao: 5px;
+    --raio-modal: 12px;
+    --raio-pilula: 999px;
     --espaco: 16px;
 }
 
@@ -36,7 +42,7 @@ button {
     padding: 0.5rem 1rem;
     border: 1px solid var(--cor-borda);
     background-color: var(--cor-botao-fundo);
-    border-radius: 5px;
+    border-radius: var(--raio-botao);
     box-shadow: 0 1px 4px rgba(5, 5, 5, 0.133);
     transition: background 200ms ease, transform 150ms;
 }
@@ -67,7 +73,7 @@ header{
         width: 80%;
         padding: 0.5rem;
         border: none;
-        border-radius: 5px;
+        border-radius: var(--raio-botao);
         margin-right: 1rem;
     }
 
@@ -91,38 +97,37 @@ header{
 
 nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
-    background-color: #ccc;
+    background-color: var(--cor-nav-fundo);
     padding: 1rem;
 
     button{
         background-color: #ffffff;
-        color: rgb(44, 12, 187);
-        border: 1px solid rgb(44, 12, 187);
+        color: var(--cor-filtro);
+        border: 1px solid var(--cor-filtro);
         padding: 0.5rem 1rem;
         margin-left: 1rem;
-        border-radius: 999px;
+        border-radius: var(--raio-pilula);
     }
 
     button.ativo {
-        background-color: rgb(44, 12, 187);
+        background-color: var(--cor-filtro);
         color: white;
-        border: 1px solid rgb(44, 12, 187);
+        border: 1px solid var(--cor-filtro);
         padding: 0.5rem 1rem;
         margin-left: 1rem;
-        border-radius: 999px;
+        border-radius: var(--raio-pilula);
     }
 }
 
 main{
 
 #lista{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
     padding: 16px 24px;
-
-    .card{width: 200px;}
 
     .card {
         display: flex;
@@ -131,18 +136,26 @@ main{
         gap: 6px;
     }
 
+    .card img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+    }
+
     .card .acoes{
+        display: flex;
         margin-top: auto;
         gap: 8px;
     }
 
     .badge{
-        width: 80px;
+        align-self: flex-start;
         background-color: #838383;
         color: rgb(0, 0, 0);
         border: 2px solid rgb(0, 0, 0);
-        padding: 0.2rem 0.2rem;
-        border-radius: 999px;
+        padding: 0.2rem 0.8rem;
+        border-radius: var(--raio-pilula);
         text-align: center;
     }
 
@@ -166,6 +179,10 @@ main{
     }
 }
 
+footer {
+    padding: var(--espaco) 24px;
+}
+
 #modal {
     position: fixed;
     inset: 0;
@@ -173,6 +190,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--espaco);
     z-index: 50;
 }
 
@@ -184,7 +202,7 @@ main{
     background: var(--cor-cartao);
     color: var(--cor-texto);
     padding: 24px;
-    border-radius: 12px;
+    border-radius: var(--raio-modal);
     width: 100%;
     max-width: 420px;
     max-height: 90vh;
@@ -202,14 +220,26 @@ main{
     font-size: 14px;
 }
 
-.modal-conteudo form input {
+.modal-conteudo form input,
+.modal-conteudo form select,
+.modal-conteudo form textarea {
     width: 100%;
     padding: 8px;
+    margin-bottom: 12px;
     border: 1px solid var(--cor-borda);
-    border-radius: 6px;
+    border-radius: var(--raio-botao);
     font: inherit;
     background: var(--cor-fundo);
     color: var(--cor-texto);
+}
+
+.modal-conteudo form textarea {
+    resize: vertical;
+}
+
+.erros {
+    color: var(--cor-erro);
+    font-weight: bold;
 }
 
 @keyframes aparecer {
@@ -223,12 +253,34 @@ main{
     }
 }
 
+@media (max-width: 600px) {
+    header input {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    header button {
+        margin-left: 0;
+    }
+
+    nav button,
+    nav button.ativo {
+        margin-left: 0;
+    }
+
+    main #lista {
+        padding: 16px;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --cor-fundo: #1a1a1a;
         --cor-texto: #f3f3f3;
         --cor-cartao: #2a2a2a;
-        --cor-borda: #070707;
-        --cor-botao-fundo: #f8f7f7;
+        --cor-borda: #444444;
+        --cor-botao-fundo: #3a3a3a;
+        --cor-nav-fundo: #2a2a2a;
+        --cor-erro: #ff8a80;
     }
 }
