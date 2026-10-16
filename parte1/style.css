@@ -284,3 +284,36 @@ footer {
         --cor-erro: #ff8a80;
     }
 }
+
+@media print {
+    :root {
+        --cor-primaria: #ffffff;
+        --cor-fundo: #ffffff;
+        --cor-texto: #000000;
+        --cor-cartao: #ffffff;
+        --cor-borda: #cccccc;
+    }
+
+    header {
+        color: var(--cor-texto);
+    }
+
+    header input,
+    header button,
+    nav,
+    main #lista .card .acoes,
+    footer {
+        display: none;
+    }
+
+    .card {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+    main #lista .badge.assistido,
+    main #lista .badge.assistindo,
+    main #lista .badge.quero {
+        color: var(--cor-texto);
+    }
+}
