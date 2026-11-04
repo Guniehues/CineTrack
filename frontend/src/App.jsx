@@ -1,12 +1,18 @@
-import Titulo from "./components/Titulo.jsx";
+import { filmesIniciais } from "./data/filmes.js";
+import Header from "./components/Header.jsx";
+import Filtros from "./components/Filtros.jsx";
+import ListaFilmes from "./components/ListaFilmes.jsx";
 
-export default function App() {
-  const ano = new Date().getFullYear();
-
-  return (
-    <main>
-      <Titulo />
-      <p>&copy; {ano} CineTrack</p>
-    </main>
-  );
+function App() {
+    return (
+        <>
+            <Header />
+            <Filtros />
+            <main>
+                <ListaFilmes filmes={filmesIniciais} />
+            </main>
+        </>
+    );
 }
+
+export default App;
