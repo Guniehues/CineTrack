@@ -6,3 +6,5 @@ export const filmesIniciais = [
     { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png", nota: 5, status: "quero", comentario: "" },
     { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg", nota: 4, status: "quero", comentario: "" },
 ];
+
+export const gerarId = (lista) => Math.max(0, ...lista.map((f) => f.id)) + 1;
