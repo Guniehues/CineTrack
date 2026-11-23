@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { gerarId } from "./data/filmes.js";
 import Header from "./components/Header.jsx";
 import Filtros from "./components/Filtros.jsx";
 import ListaFilmes from "./components/ListaFilmes.jsx";
 import ModalFilme from "./components/ModalFilme.jsx";
-import { listar } from "./api.js";
+import { listar, criar, atualizar, remover} from "./api.js";
 
 function App() {
 
@@ -26,28 +25,24 @@ function App() {
 
     useEffect(() => {document.title = `CineTrack (${filmes.length})`}, [filmes.length]);
 
-    useEffect(() => {listar().then((dados) => setFilmes(dados)).catch((erro) => setErro(erro.message)).finally(() => setCarregando(false)); }, []);
+    useEffect(() => {
+        listar().then(setFilmes).catch(() => setErro(true)).finally(() => setCarregando(false));
+    }, []);
 
-    function adicionar(novoFilme) {
-        setFilmes((anteriores) => [...anteriores, { ...novoFilme, id: gerarId(anteriores) },]);
-    }
-
-    function remover(id) {
-        setFilmes((anteriores) => anteriores.filter((filme) => filme.id !== id));
-    }
-
-    function editar(id, alteracoes) {
-        setFilmes((anteriores) => anteriores.map((filme) => filme.id === id ? { ...filme, ...alteracoes } : filme));
-    }
-
-    function salvar(dados) {
-        if (editando.id) {
-            editar(editando.id, dados);
+    async function salvar(filme) {
+        if (filme.id) {
+            const at = await atualizar(filme.id, filme);
+            setFilmes(fs => fs.map((f) => f.id === at.id ? at : f));
         } else {
-            adicionar(dados);
+            const novo = await criar(filme);
+            setFilmes(fs => [...fs, novo]);
         }
-
         setEditando(null);
+    }
+
+    async function removerFilme(id) {
+        await remover(id);
+        setFilmes((anteriores) => anteriores.filter((filme) => filme.id !== id));
     }
 
     let conteudo;
@@ -57,7 +52,7 @@ function App() {
     } else if (erro){
         conteudo = (<p className="erro">Erro: {erro}</p>);
     } else {
-        conteudo = <ListaFilmes filmes={visiveis} aoEditar={setEditando} aoRemover={remover} />;
+        conteudo = <ListaFilmes filmes={visiveis} aoEditar={setEditando} aoRemover={removerFilme} />;
     }
 
     return (

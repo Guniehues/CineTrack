@@ -13,8 +13,6 @@ const ARQUIVO = path.join(__dirname, "data", "filmes.json");
 
 const porta = process.env.PORT || 3000;
 
-app.listen(porta, () => console.log(`API na porta ${porta}`));
-
 function gerarId(lista){
   const ids = lista.map((filme) => filme.id);
   return Math.max(0, ...ids) + 1;
@@ -58,10 +56,6 @@ app.get("/filmes/:id", (req, res) => {
   return res.json(filme);
 });
 
-app.listen(3000, () => {
-  console.log("API na porta 3000");
-});
-
 app.post("/filmes", (req, res) => {
   const dados = req.body;
   if (!dados.titulo || !dados.ano){
@@ -97,4 +91,6 @@ app.delete("/filmes/:id", (req,res) => {
   salvarFilmes(lista.filter((f) => f.id !== id));
   res.sendStatus(204);
 });
+
+app.listen(porta, () => console.log(`API na porta ${porta}`));
 
