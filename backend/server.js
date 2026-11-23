@@ -15,6 +15,10 @@ function lerFilmes() {
   return JSON.parse(dados);
 }
 
+app.get("/", (req, res) => {
+  res.json({ola: "Cinetrack!"});
+});
+
 app.get("/filmes", (req, res) => {
   const filmes = lerFilmes();
 
@@ -41,5 +45,5 @@ app.get("/filmes/:id", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Servidor rodando em http://localhost:3000");
+  console.log("API na porta 3000");
 });
