@@ -59,6 +59,7 @@ function App() {
         <>
             <Header busca={busca} aoBuscar={setBusca} aoAdicionar={() => setEditando({})} />
             <Filtros ativo={status} aoMudar={setStatus} />
+            <p>Exibindo {visiveis.length} de {filmes.length} filmes</p>
             <main>
                 {conteudo}
             </main>
