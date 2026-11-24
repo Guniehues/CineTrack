@@ -5,13 +5,22 @@ import ListaFilmes from "./components/ListaFilmes.jsx";
 import ModalFilme from "./components/ModalFilme.jsx";
 import { listar, criar, atualizar, remover} from "./api.js";
 
+function carregarFiltro(campo, padrao) {
+    try {
+        const filtros = JSON.parse(localStorage.getItem("cinetrack:filtros"));
+        return filtros?.[campo] ?? padrao;
+    } catch {
+        return padrao;
+    }
+}
+
 function App() {
 
     console.log("render");
 
-    const [status, setStatus] = useState("todos");
+    const [status, setStatus] = useState(() => carregarFiltro("status", "todos"));
 
-    const [busca, setBusca] = useState("");
+    const [busca, setBusca] = useState(() => carregarFiltro("busca", ""));
 
     const [filmes, setFilmes] = useState([]);
 
@@ -22,6 +31,10 @@ function App() {
     const [editando, setEditando] = useState(null);
 
     const visiveis = filmes.filter((filme) => status === "todos" || filme.status === status).filter((filme) => filme.titulo.toLowerCase().includes(busca.toLowerCase()));
+
+    useEffect(() => {
+        localStorage.setItem("cinetrack:filtros", JSON.stringify({ busca, status }));
+    }, [busca, status]);
 
     useEffect(() => {document.title = `CineTrack (${filmes.length})`}, [filmes.length]);
 
