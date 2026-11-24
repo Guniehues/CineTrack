@@ -32,13 +32,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/filmes", (req, res) => {
-  const filmes = lerFilmes();
+  let filmes = lerFilmes();
+
+  if (req.query.q){
+    filmes = filmes.filter((filme) => filme.titulo.toLowerCase().includes(req.query.q.toLowerCase()));
+  }
 
   if (req.query.status) {
-    const filtrados = filmes.filter(
-      (filme) => filme.status === req.query.status
-    );
-    return res.json(filtrados);
+    filmes = filmes.filter((filme) => filme.status === req.query.status);
   }
 
   return res.json(filmes);
@@ -92,5 +93,18 @@ app.delete("/filmes/:id", (req,res) => {
   res.sendStatus(204);
 });
 
-app.listen(porta, () => console.log(`API na porta ${porta}`));
 
+app.get("/stats", (req, res) => {
+  const filmes = lerFilmes();
+  const total = filmes.length;
+  const porStatus = filmes.reduce((acc, filme) => {
+    acc[filme.status] = (acc[filme.status] || 0) + 1;
+    return acc;
+  }, {});
+  const somaNotas = filmes.reduce((acc, filme) => acc + (filme.nota || 0), 0);
+  const mediaNotas = Number((somaNotas / total).toFixed(1));
+
+  res.json({ total, porStatus, mediaNotas });
+});
+
+app.listen(porta, () => console.log(`API na porta ${porta}`));
