@@ -27,6 +27,28 @@ function salvarFilmes(lista) {
   fs.writeFileSync(ARQUIVO, JSON.stringify(lista, null, 2));
 }
 
+function validarFilme(filme) {
+  const erros = [];
+
+  if (typeof filme.titulo !== "string" || filme.titulo === "") {
+    erros.push("Título é obrigatório");
+  }
+  if (filme.ano < 1888 || filme.ano > 2030) {
+    erros.push("Ano deve estar entre 1888 e 2030");
+  }
+  if (typeof filme.genero !== "string" || filme.genero === "") {
+    erros.push("Gênero é obrigatório");
+  }
+  if (filme.nota < 1 || filme.nota > 5) {
+    erros.push("nota deve estar entre 1 e 5");
+  }
+  if (!["assistido", "assistindo", "quero"].includes(filme.status)) {
+    erros.push("status deve ser assistido, assistindo ou quero");
+  }
+
+  return erros;
+}
+
 app.get("/", (req, res) => {
   res.json({ola: "Cinetrack!"});
 });
@@ -59,8 +81,9 @@ app.get("/filmes/:id", (req, res) => {
 
 app.post("/filmes", (req, res) => {
   const dados = req.body;
-  if (!dados.titulo || !dados.ano){
-    return res.status(400).json({ erro: "Dados obrigatórios" });
+  const erros = validarFilme(dados);
+  if (erros.length) {
+    return res.status(400).json({ erros });
   }
   const lista = lerFilmes();
   const novo = {id: gerarId(lista), ...dados};
@@ -77,7 +100,12 @@ app.put("/filmes/:id", (req, res) => {
   if (i === -1) {
     return res.status(404).json({ erro: "Filme não encontrado" });
   }
-  lista[i] = { ...lista[i], ...req.body, id};
+  const atualizado = { ...lista[i], ...(req.body || {}), id };
+  const erros = validarFilme(atualizado);
+  if (erros.length) {
+    return res.status(400).json({ erros });
+  }
+  lista[i] = atualizado;
   salvarFilmes(lista);
   res.json(lista[i]);
 });

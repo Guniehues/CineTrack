@@ -28,6 +28,8 @@ function App() {
 
     const [erro, setErro] = useState(null);
 
+    const [erroSalvar, setErroSalvar] = useState(null);
+
     const [editando, setEditando] = useState(null);
 
     const visiveis = filmes.filter((filme) => status === "todos" || filme.status === status).filter((filme) => filme.titulo.toLowerCase().includes(busca.toLowerCase()));
@@ -39,18 +41,26 @@ function App() {
     useEffect(() => {document.title = `CineTrack (${filmes.length})`}, [filmes.length]);
 
     useEffect(() => {
-        listar().then(setFilmes).catch(() => setErro(true)).finally(() => setCarregando(false));
+        listar()
+            .then(setFilmes)
+            .catch((erro) => setErro(erro instanceof Error ? erro.message : "Não foi possível carregar os filmes."))
+            .finally(() => setCarregando(false));
     }, []);
 
     async function salvar(filme) {
-        if (filme.id) {
-            const at = await atualizar(filme.id, filme);
-            setFilmes(fs => fs.map((f) => f.id === at.id ? at : f));
-        } else {
-            const novo = await criar(filme);
-            setFilmes(fs => [...fs, novo]);
+        setErroSalvar(null);
+        try {
+            if (filme.id) {
+                const at = await atualizar(filme.id, filme);
+                setFilmes(fs => fs.map((f) => f.id === at.id ? at : f));
+            } else {
+                const novo = await criar(filme);
+                setFilmes(fs => [...fs, novo]);
+            }
+            setEditando(null);
+        } catch (erro) {
+            setErroSalvar(erro instanceof Error ? erro.message : "Não foi possível salvar o filme.");
         }
-        setEditando(null);
     }
 
     async function removerFilme(id) {
@@ -76,7 +86,17 @@ function App() {
             <main>
                 {conteudo}
             </main>
-            {editando && (<ModalFilme filme={editando} aoSalvar={salvar} aoFechar={() => setEditando(null)} />)}
+            {editando && (
+                <ModalFilme
+                    filme={editando}
+                    erro={erroSalvar}
+                    aoSalvar={salvar}
+                    aoFechar={() => {
+                        setErroSalvar(null);
+                        setEditando(null);
+                    }}
+                />
+            )}
         </>
     );
 }

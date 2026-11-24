@@ -2,8 +2,12 @@ const BASE = "http://localhost:3000";
 
 async function pedir(caminho, opcoes = {}) {
     const r = await fetch(BASE + caminho, {headers: {"Content-Type": "application/json"}, ...opcoes});
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.status === 204 ? null : r.json();
+    const dados = r.status === 204 ? null : await r.json();
+    if (!r.ok) {
+        const mensagem = Array.isArray(dados?.erros) ? dados.erros.join("; ") : `HTTP ${r.status}`;
+        throw new Error(mensagem);
+    }
+    return dados;
 }
 
 export const listar = () => pedir("/filmes");

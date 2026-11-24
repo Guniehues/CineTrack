@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const VAZIO = {titulo: "", ano: "", genero: "", poster: "", status: "quero", nota: 3, comentario: ""};
 
-function ModalFilme({filme, aoSalvar, aoFechar}) {
+function ModalFilme({filme, erro, aoSalvar, aoFechar}) {
     const [dados, setDados] = useState({...VAZIO, ...filme});
 
     function atualizar(campo, valor) {
@@ -18,6 +18,7 @@ function ModalFilme({filme, aoSalvar, aoFechar}) {
         <div id="modal">
             <div className="modal-conteudo">
                 <h2>{filme.id ? "Editar filme" : "Adicionar filme"}</h2>
+                {erro && <p className="erros" role="alert">{erro}</p>}
                 <form onSubmit={submeter}>
                     <label>Título
                         <input value={dados.titulo} onChange={(e) => atualizar("titulo", e.target.value)} required />
