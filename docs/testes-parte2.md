@@ -24,6 +24,7 @@ Data: 24/11/2026
 
 - PUT em `/filmes/1` com os mesmos valores inválidos respondeu HTTP `400` com os dois erros, sem alterar o filme.
 - Ao provocar a rejeição pelo formulário do frontend, as duas mensagens foram exibidas no modal.
+- POST com `ano` e `nota` ausentes, ou com valores não numéricos, respondeu HTTP `400` com os erros correspondentes.
 
 ## CRUD e persistência
 
@@ -31,6 +32,7 @@ Data: 24/11/2026
 2. Editei o título para `ANP10 Teste Atualizado`.
 3. Encerrei e reiniciei a API. Após recarregar a página, o filme editado continuou na lista: sete filmes no total.
 4. Removi o filme pela interface. A lista voltou a seis filmes e a API confirmou os IDs originais de 1 a 6.
+5. Ao cancelar a confirmação de remoção, o filme permaneceu na lista. Com uma resposta HTTP `404` simulada, a interface mostrou `Falha ao remover: Filme não encontrado` e manteve o filme.
 
 ## Rotas existentes
 

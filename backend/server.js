@@ -30,16 +30,16 @@ function salvarFilmes(lista) {
 function validarFilme(filme) {
   const erros = [];
 
-  if (typeof filme.titulo !== "string" || filme.titulo === "") {
+  if (typeof filme.titulo !== "string" || !filme.titulo.trim()) {
     erros.push("Título é obrigatório");
   }
-  if (filme.ano < 1888 || filme.ano > 2030) {
+  if (!Number.isFinite(filme.ano) || filme.ano < 1888 || filme.ano > 2030) {
     erros.push("Ano deve estar entre 1888 e 2030");
   }
-  if (typeof filme.genero !== "string" || filme.genero === "") {
+  if (typeof filme.genero !== "string" || !filme.genero.trim()) {
     erros.push("Gênero é obrigatório");
   }
-  if (filme.nota < 1 || filme.nota > 5) {
+  if (!Number.isFinite(filme.nota) || filme.nota < 1 || filme.nota > 5) {
     erros.push("nota deve estar entre 1 e 5");
   }
   if (!["assistido", "assistindo", "quero"].includes(filme.status)) {
@@ -80,7 +80,7 @@ app.get("/filmes/:id", (req, res) => {
 });
 
 app.post("/filmes", (req, res) => {
-  const dados = req.body;
+  const dados = req.body || {};
   const erros = validarFilme(dados);
   if (erros.length) {
     return res.status(400).json({ erros });

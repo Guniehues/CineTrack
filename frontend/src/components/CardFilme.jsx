@@ -11,7 +11,11 @@ function CardFilme({ filme, aoEditar, aoRemover }) {
             <Badge status={filme.status} />
             <div className="acoes">
                 <button onClick={() => aoEditar(filme)}>Editar</button>
-                <button onClick={() => aoRemover(filme.id)}>Remover</button>
+                <button onClick={() => {
+                    if (window.confirm("Remover este filme?")) {
+                        aoRemover(filme.id);
+                    }
+                }}>Remover</button>
             </div>
         </article>
     );

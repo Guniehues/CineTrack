@@ -4,7 +4,9 @@ async function pedir(caminho, opcoes = {}) {
     const r = await fetch(BASE + caminho, {headers: {"Content-Type": "application/json"}, ...opcoes});
     const dados = r.status === 204 ? null : await r.json();
     if (!r.ok) {
-        const mensagem = Array.isArray(dados?.erros) ? dados.erros.join("; ") : `HTTP ${r.status}`;
+        const mensagem = Array.isArray(dados?.erros) && dados.erros.length
+            ? dados.erros.join("; ")
+            : dados?.erro || `HTTP ${r.status}`;
         throw new Error(mensagem);
     }
     return dados;

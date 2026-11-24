@@ -30,6 +30,8 @@ function App() {
 
     const [erroSalvar, setErroSalvar] = useState(null);
 
+    const [erroRemover, setErroRemover] = useState(null);
+
     const [editando, setEditando] = useState(null);
 
     const visiveis = filmes.filter((filme) => status === "todos" || filme.status === status).filter((filme) => filme.titulo.toLowerCase().includes(busca.toLowerCase()));
@@ -64,8 +66,13 @@ function App() {
     }
 
     async function removerFilme(id) {
-        await remover(id);
-        setFilmes((anteriores) => anteriores.filter((filme) => filme.id !== id));
+        setErroRemover(null);
+        try {
+            await remover(id);
+            setFilmes((anteriores) => anteriores.filter((filme) => filme.id !== id));
+        } catch (erro) {
+            setErroRemover(erro instanceof Error ? erro.message : "Não foi possível remover o filme.");
+        }
     }
 
     let conteudo;
@@ -84,6 +91,7 @@ function App() {
             <Filtros ativo={status} aoMudar={setStatus} />
             <p>Exibindo {visiveis.length} de {filmes.length} filmes</p>
             <main>
+                {erroRemover && <p className="erros" role="alert">Falha ao remover: {erroRemover}</p>}
                 {conteudo}
             </main>
             {editando && (
